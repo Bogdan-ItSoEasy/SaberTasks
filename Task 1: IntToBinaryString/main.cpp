@@ -3,7 +3,7 @@
 
 constexpr uint BITS_IN_BYTE = 8;
 
-int GetBinaryViewSize(int32_t value){
+int GetBinaryViewSize(int32_t value) {
     uint32_t testBit = 0x80000000;
 
     //Search for the index of the first value (non-zero) bit

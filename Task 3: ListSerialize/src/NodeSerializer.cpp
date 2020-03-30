@@ -40,6 +40,7 @@ ListNode *NodeDeserialize(FILE *file) {
 
         if(1 != fread(&current->rand, sizeof(current->rand), 1, file))
             throw std::ios_base::failure(DESERIALIZE_ERROR_MESSAGE);
+
         size_t length;
         if(1!= fread(&length, sizeof(size_t), 1, file))
             throw std::ios_base::failure(DESERIALIZE_ERROR_MESSAGE);
@@ -47,7 +48,6 @@ ListNode *NodeDeserialize(FILE *file) {
         std::string data(length, ' ');
         if(length != fread(&data[0], 1, length, file))
             throw std::ios_base::failure(DESERIALIZE_ERROR_MESSAGE);
-
         current->data = data;
     }
 
