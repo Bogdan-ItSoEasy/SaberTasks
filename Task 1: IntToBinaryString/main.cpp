@@ -1,24 +1,29 @@
 #include <gtest/gtest.h>
 #include <stdio.h>
 
-char *IntToBinaryString(int32_t value) {
-    if (value == 0) {
-        char *null = new char[2]{'0', '\0'};
-        return null;
-    }
+constexpr uint BITS_IN_BYTE = 8;
 
+int GetBinaryViewSize(int32_t value){
     uint32_t testBit = 0x80000000;
 
-    //Поиск индекса первого значимого (не нулевого) бита
+    //Search for the index of the first value (non-zero) bit
     uint32_t firstValueIndex = 0;
     while ((testBit & value) == 0) {
         testBit = testBit >> 1;
         ++firstValueIndex;
     }
 
-    //Длина двоичного представления числа. sizeof(int32_t)*8 - максимальная
-    //длина представления.
-    uint32_t viewSize = sizeof(int32_t) * 8 - firstValueIndex;
+    //Binary view length. sizeof(int32_t)*8 - max binary view length.
+    return sizeof(int32_t) * BITS_IN_BYTE - firstValueIndex;
+}
+
+char *IntToBinaryString(int32_t value) {
+    if (value == 0) {
+        char *null = new char[2]{'0', '\0'};
+        return null;
+    }
+
+    const uint32_t viewSize = GetBinaryViewSize(value);
 
     char *result = new char[viewSize + 1];
     result[viewSize] = '\0';
@@ -44,47 +49,47 @@ int main(int argc, char **argv) {
 
 TEST(IntToBinaryString, MinValue) {
     char *actual = IntToBinaryString(INT32_MIN);
-    char expected[33] = "10000000000000000000000000000000";
+    const char expected[33] = "10000000000000000000000000000000";
 
     ASSERT_EQ(strlen(expected), strlen(actual));
     ASSERT_TRUE(0 == memcmp(expected, actual, sizeof(expected)));
 }
 
 TEST(IntToBinaryString, NullValue) {
-    char *actual = IntToBinaryString(0);
-    char expected[2] = "0";
+    const char *actual = IntToBinaryString(0);
+    const char expected[2] = "0";
 
     ASSERT_EQ(strlen(expected), strlen(actual));
     ASSERT_TRUE(0 == memcmp(expected, actual, sizeof(expected)));
 }
 
 TEST(IntToBinaryString, MaxValue) {
-    char *actual = IntToBinaryString(INT32_MAX);
-    char expected[32] = "1111111111111111111111111111111";
+    const char *actual = IntToBinaryString(INT32_MAX);
+    const char expected[32] = "1111111111111111111111111111111";
 
     ASSERT_EQ(strlen(expected), strlen(actual));
     ASSERT_TRUE(0 == memcmp(expected, actual, sizeof(expected)));
 }
 
 TEST(IntToBinaryString, MinusOne) {
-    char *actual = IntToBinaryString(-1);
-    char expected[33] = "11111111111111111111111111111111";
+    const char *actual = IntToBinaryString(-1);
+    const char expected[33] = "11111111111111111111111111111111";
 
     ASSERT_EQ(strlen(expected), strlen(actual));
     ASSERT_TRUE(0 == memcmp(expected, actual, sizeof(expected)));
 }
 
 TEST(IntToBinaryString, CommonValue) {
-    char *actual = IntToBinaryString(0xABCD);
-    char expected[17] = "1010101111001101";
+    const char *actual = IntToBinaryString(0xABCD);
+    const char expected[17] = "1010101111001101";
 
     ASSERT_EQ(strlen(expected), strlen(actual));
     ASSERT_TRUE(0 == memcmp(expected, actual, sizeof(expected)));
 }
 
 TEST(IntToBinaryString, CommonNegValue) {
-    char *actual = IntToBinaryString(-255);
-    char expected[33] = "11111111111111111111111100000001";
+    const char *actual = IntToBinaryString(-255);
+    const char expected[33] = "11111111111111111111111100000001";
 
     ASSERT_EQ(strlen(expected), strlen(actual));
     ASSERT_TRUE(0 == memcmp(expected, actual, sizeof(expected)));

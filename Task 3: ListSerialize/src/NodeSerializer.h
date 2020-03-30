@@ -3,8 +3,8 @@
 
 #include "ListNode.h"
 
-void NodeSerialize(FILE *file, ListNode *node);
+void NodeSerialize(FILE *file, const ListNode *node);
 
 ListNode *NodeDeserialize(FILE *file);
 
-#endif // TASK3_SERIALIZER_H
+#endif

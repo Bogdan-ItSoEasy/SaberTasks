@@ -10,4 +10,4 @@ struct ListNode {
     std::string data;
 };
 
-#endif // TASK3_LISTNODE_H
+#endif

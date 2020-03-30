@@ -9,7 +9,7 @@ class List {
     List();
     explicit List(ListNode *head);
 
-    void Serialize(FILE *file); // сохранение в файл (файл открыт с помощью
+    void Serialize(FILE *file) const; // сохранение в файл (файл открыт с помощью
                                 // fopen(path, "wb"))
     void Deserialize(FILE *file); // загрузка из файла (файл открыт с помощью
                                   // fopen(path, "rb"))
@@ -23,4 +23,4 @@ class List {
 bool operator==(const List &left, const List &right);
 bool operator!=(const List &left, const List &right);
 
-#endif // TASK3_LIST_H
+#endif

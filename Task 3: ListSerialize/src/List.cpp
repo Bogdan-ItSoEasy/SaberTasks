@@ -9,7 +9,7 @@ List::List(ListNode *head) { this->head = head; }
 
 void List::Deserialize(FILE *file) { this->head = NodeDeserialize(file); }
 
-void List::Serialize(FILE *file) {
+void List::Serialize(FILE *file) const{
     if (this->head == nullptr) {
         return;
     }

@@ -80,7 +80,8 @@ TEST(SerializerTests, SerializeEmptyStringList) {
 
     FILE *fp = fopen("serialize_simple_list_test", "wb");
     list->Serialize(fp);
-    fclose(fp);
+    if (fp != nullptr)
+        fclose(fp);
 
     fp = fopen("serialize_simple_list_test", "rb");
     auto actual = new List();
@@ -105,7 +106,8 @@ TEST(SerializerTests, SerializeSimpleList) {
 
     FILE *fp = fopen("serialize_simple_list_test", "wb");
     list->Serialize(fp);
-    fclose(fp);
+    if (fp != nullptr)
+        fclose(fp);
 
     fp = fopen("serialize_simple_list_test", "rb");
     auto actual = new List();
@@ -166,7 +168,8 @@ TEST(SerializerTests, SerializeList) {
     fp = fopen("serialize_list_test", "rb");
     auto actual = new List();
     actual->Deserialize(fp);
-    fclose(fp);
+    if (fp != nullptr)
+        fclose(fp);
 
     ASSERT_TRUE(*list == *actual);
     remove("serialize_list_test");

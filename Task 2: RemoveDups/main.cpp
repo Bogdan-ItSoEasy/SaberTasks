@@ -4,15 +4,13 @@
 #include <vector>
 
 void RemoveDups(char *input) {
-
-    uint size = strlen(input);
+    const uint size = strlen(input);
     std::vector<std::tuple<uint, uint>> duplicateIndexes;
 
     bool isDuplicate = false;
     uint beginDuplicate = 0;
 
     for (int i = 1; i < size; ++i) {
-
         if (!isDuplicate && input[i - 1] == input[i]) {
             isDuplicate = true;
             duplicateIndexes.emplace_back(beginDuplicate, i);
@@ -28,7 +26,6 @@ void RemoveDups(char *input) {
 
     uint dst = std::get<1>(duplicateIndexes[0]);
     for (int i = 1; i < duplicateIndexes.size(); ++i) {
-
         uint begin, end;
         std::tie(begin, end) = duplicateIndexes[i];
 
@@ -45,7 +42,7 @@ int main(int argc, char **argv) {
 
 TEST(RemoveDups, Example) {
     char actual[] = "AAA BBB AAA";
-    char expected[] = "A B A";
+    const char expected[] = "A B A";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -54,7 +51,7 @@ TEST(RemoveDups, Example) {
 
 TEST(RemoveDups, Empty) {
     char actual[] = "";
-    char expected[] = "";
+    const char expected[] = "";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -63,7 +60,7 @@ TEST(RemoveDups, Empty) {
 
 TEST(RemoveDups, WithoutRepeats) {
     char actual[] = "abcdfg";
-    char expected[] = "abcdfg";
+    const char expected[] = "abcdfg";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -72,7 +69,7 @@ TEST(RemoveDups, WithoutRepeats) {
 
 TEST(RemoveDups, OneSymbol) {
     char actual[] = "a";
-    char expected[] = "a";
+    const char expected[] = "a";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -81,7 +78,7 @@ TEST(RemoveDups, OneSymbol) {
 
 TEST(RemoveDups, RepeateOneSymbol) {
     char actual[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    char expected[] = "a";
+    const char expected[] = "a";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -90,7 +87,7 @@ TEST(RemoveDups, RepeateOneSymbol) {
 
 TEST(RemoveDups, TwoSymbol) {
     char actual[] = "aa";
-    char expected[] = "a";
+    const char expected[] = "a";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -99,7 +96,7 @@ TEST(RemoveDups, TwoSymbol) {
 
 TEST(RemoveDups, Mirror) {
     char actual[] = "abcdefghhgfedcba";
-    char expected[] = "abcdefghgfedcba";
+    const char expected[] = "abcdefghgfedcba";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -108,7 +105,7 @@ TEST(RemoveDups, Mirror) {
 
 TEST(RemoveDups, RepeatsInBegin) {
     char actual[] = "aaaaaaaaaabcdefg";
-    char expected[] = "abcdefg";
+    const char expected[] = "abcdefg";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -117,7 +114,7 @@ TEST(RemoveDups, RepeatsInBegin) {
 
 TEST(RemoveDups, RepeatsInMiddle) {
     char actual[] = "abcdddddddddefg";
-    char expected[] = "abcdefg";
+    const char expected[] = "abcdefg";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));
@@ -126,7 +123,7 @@ TEST(RemoveDups, RepeatsInMiddle) {
 
 TEST(RemoveDups, RepeatsInEnd) {
     char actual[] = "abcdefggggggggggg";
-    char expected[] = "abcdefg";
+    const char expected[] = "abcdefg";
     RemoveDups(actual);
 
     ASSERT_EQ(strlen(expected), strlen(actual));

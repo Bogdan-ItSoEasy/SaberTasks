@@ -1,8 +1,9 @@
 #include "NodeSerializer.h"
-#include <map>
+#include <unordered_map>
+#include <iostream>
 
-void NodeSerialize(FILE *file, ListNode *node) {
-    auto length = node->data.size();
+void NodeSerialize(FILE *file, const ListNode *node) {
+    const auto length = node->data.size();
     fwrite(&node, sizeof(node), 1, file);
     fwrite(&node->rand, sizeof(node->rand), 1, file);
     fwrite(&length, sizeof(length), 1, file);
@@ -17,7 +18,7 @@ ListNode *NodeDeserialize(FILE *file) {
     if (file == nullptr)
         return nullptr;
 
-    std::map<ListNode *, ListNode *> actualPtr;
+    std::unordered_map<ListNode *, ListNode *> actualPtr;
 
     auto *head = new ListNode();
     ListNode *current = nullptr;

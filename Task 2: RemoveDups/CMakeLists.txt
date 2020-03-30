@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(Task2)
+project(RemoveDups)
 
 find_package(GTest REQUIRED)
 find_package(Threads REQUIRED)
@@ -12,9 +12,9 @@ include_directories(
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Task2 main.cpp)
+add_executable(RemoveDups main.cpp)
 
-target_link_libraries(Task2 ${GTEST_LIBRARIES} Threads::Threads)
+target_link_libraries(RemoveDups ${GTEST_LIBRARIES} Threads::Threads)
 
 enable_testing()
-add_test(Task2 "./main.cpp")
+add_test(RemoveDups "./main.cpp")
