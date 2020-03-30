@@ -14,6 +14,9 @@ void NodeSerialize(FILE *file, const ListNode *node) {
     }
 }
 
+const std::string DESERIALIZE_ERROR_MESSAGE = std::string("ERROR: Couldn't deserialize file. Maybe file was corrupted");
+const std::string BAD_LINK_ERROR_MESSAGE = std::string("ERROR: Couldn't find link on the random node");
+
 ListNode *NodeDeserialize(FILE *file) {
     if (file == nullptr)
         return nullptr;
@@ -35,16 +38,22 @@ ListNode *NodeDeserialize(FILE *file) {
 
         actualPtr[oldPtr] = current;
 
-        fread(&current->rand, sizeof(current->rand), 1, file);
-
+        if(1 != fread(&current->rand, sizeof(current->rand), 1, file))
+            throw std::ios_base::failure(DESERIALIZE_ERROR_MESSAGE);
         size_t length;
-        fread(&length, sizeof(size_t), 1, file);
+        if(1!= fread(&length, sizeof(size_t), 1, file))
+            throw std::ios_base::failure(DESERIALIZE_ERROR_MESSAGE);
+
         std::string data(length, ' ');
-        fread(&data[0], 1, length, file);
+        if(length != fread(&data[0], 1, length, file))
+            throw std::ios_base::failure(DESERIALIZE_ERROR_MESSAGE);
+
         current->data = data;
     }
 
     while (current != nullptr) {
+        if(actualPtr.count(current->rand) == 0)
+            throw std::ios_base::failure(BAD_LINK_ERROR_MESSAGE);
         current->rand = actualPtr[current->rand];
         current = current->prev;
     }
